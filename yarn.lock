@@ -2131,6 +2131,18 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
+"@use-gesture/core@10.1.4":
+  version "10.1.4"
+  resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.1.4.tgz#72a199eafcd1ef97eebab96b11ae0b2559bf7eba"
+  integrity sha512-7TcntiiON64kGPDovAbjwh2C8+qL2Ts8RaRFNTsWiWv7nOAGbvT969JHJ0zRyJYg8PlAXeCf/q0IpoMyou731Q==
+
+"@use-gesture/react@^10.1.4":
+  version "10.1.4"
+  resolved "https://registry.yarnpkg.com/@use-gesture/react/-/react-10.1.4.tgz#d6b6271bef8043bb444289283b9215966e0c09ed"
+  integrity sha512-1CoMHpN2b2ALqZEcfnxIx+MibVhxx+6u4gGOxwRtkr/emFYJA+bWFtWSYdOM4r8ALGT+1yeVUJJg1YKHDnL8EA==
+  dependencies:
+    "@use-gesture/core" "10.1.4"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -9639,6 +9651,11 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
+
+react-intersection-observer@^8.32.2:
+  version "8.32.2"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.32.2.tgz#527eeecf569309d64ed96330636d90aac336c957"
+  integrity sha512-QTcea+n28AvOHbTku+jErfQqknbc4Nuh7EUNik8p/JMN56W2Jhjs+qcYZzQhAoyLX8pZD0QXpYX0lW87faackQ==
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
