@@ -275,9 +275,7 @@ const MenuToggle = ({ setSearch, search }) => {
               <p className="m-2">
                 We {`don't`} accepts any promotional or advertising offers.
               </p>
-              <p className="m-2">
-                Made by Kayden.
-              </p>
+              <p className="m-2">Made by Kayden.</p>
             </div>
           )}
           {taskCreateShow && (
@@ -305,36 +303,38 @@ const MenuToggle = ({ setSearch, search }) => {
                 <p className="ml-4">a page:</p>
               </div>
               {watch("taskType") == "submit" && (
-                <div className="mt-4">
-                  <input
-                    placeholder="Page url"
-                    className="mt-2 min-w-2/3"
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                    }}
-                  />
-                  <textarea
-                    placeholder="description"
-                    className="mt-2 min-w-2/3"
-                    rows="3"
-                    style={{ border: "1px solid black", textAlign: "center" }}
-                  />
-                  <input
-                    placeholder="your contact email"
-                    className="mt-2 min-w-2/3"
-                    style={{ border: "1px solid black", textAlign: "center" }}
-                  />
-                  <div
-                    id="agreement"
-                    className="flex flex-row items-center justify-center mt-2"
-                  >
-                    <input type="checkbox" />
-                    <p className="ml-2">this page is free from:</p>
+                <div className="mt-4" style={{ width: "100%" }}>
+                  <div className="flex flex-col items-center justify-center">
+                    <input
+                      placeholder="Page url"
+                      className="mt-2 min-w-2/3"
+                      style={{
+                        border: "1px solid black",
+                        textAlign: "center",
+                      }}
+                    />
+                    <textarea
+                      placeholder="description"
+                      className="mt-2 min-w-2/3"
+                      rows="3"
+                      style={{ border: "1px solid black", textAlign: "center" }}
+                    />
+                    <input
+                      placeholder="your contact email"
+                      className="mt-2 min-w-2/3"
+                      style={{ border: "1px solid black", textAlign: "center" }}
+                    />
+                    <div
+                      id="agreement"
+                      className="flex flex-row items-center justify-center mt-2"
+                    >
+                      <input type="checkbox" />
+                      <p className="ml-2">this page is free from:</p>
+                    </div>
+                    <p>
+                      hate speech, misinformation, illegal or harmful content.
+                    </p>
                   </div>
-                  <p>
-                    hate speech, misinformation, illegal or harmful content.
-                  </p>
                   <button
                     className="py-2 px-4 m-4"
                     style={{ border: "1px solid black" }}
