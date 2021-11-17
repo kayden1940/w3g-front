@@ -183,8 +183,7 @@ const MenuToggle = ({ setSearch, search }) => {
           {!taskCreateShow && (
             <div
               id="selects"
-              className="mt-4 flex flex-col md:flex-row items-center justify-between"
-              style={{ width: "90%" }}
+              className="w-2/3 sm:w-4/5 2xl:w-2/3 mt-4 flex flex-col md:flex-row items-center justify-between"
             >
               <Controller
                 name="purpose"
@@ -234,7 +233,7 @@ const MenuToggle = ({ setSearch, search }) => {
           <div
             id="actions"
             className="flex justify-between m-6 md:m-4"
-            style={{ width: "85%" }}
+            style={{ width: "65%" }}
           >
             <button
               onClick={() =>
@@ -273,7 +272,7 @@ const MenuToggle = ({ setSearch, search }) => {
                 {`It's`} a place for everyone to share their favorite websites.
               </p>
               <p className="m-2">
-                We {`don't`} accepts any promotional or advertising offers.
+                We {`don't`} accepts any promotional nor advertising offers.
               </p>
               <p className="m-2">Made by Kayden.</p>
             </div>
@@ -314,13 +313,13 @@ const MenuToggle = ({ setSearch, search }) => {
                       }}
                     />
                     <textarea
-                      placeholder="description"
+                      placeholder="Description"
                       className="mt-2 min-w-2/3"
                       rows="3"
                       style={{ border: "1px solid black", textAlign: "center" }}
                     />
                     <input
-                      placeholder="your contact email"
+                      placeholder="Your contact email"
                       className="mt-2 min-w-2/3"
                       style={{ border: "1px solid black", textAlign: "center" }}
                     />
@@ -358,13 +357,13 @@ const MenuToggle = ({ setSearch, search }) => {
                       }}
                     />
                     <textarea
-                      placeholder="reason"
+                      placeholder="Description"
                       className="mt-2 min-w-2/3"
                       rows="3"
                       style={{ border: "1px solid black", textAlign: "center" }}
                     />
                     <input
-                      placeholder="your contact email"
+                      placeholder="Your contact email"
                       className="mt-2 min-w-2/3"
                       style={{ border: "1px solid black", textAlign: "center" }}
                     />
