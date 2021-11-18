@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@use-gesture/react": "^10.1.4",
+    "axios": "^0.24.0",
     "customize-cra": "^1.0.0",
     "dotenv": "^10.0.0",
     "framer-motion": "^5.2.1",

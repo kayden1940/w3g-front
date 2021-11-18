@@ -15,6 +15,7 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useDrag } from "@use-gesture/react";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 
 // import { debounce } from "../../utils";
 
@@ -133,11 +134,13 @@ const MenuToggle = ({ setSearch, search }) => {
   const [menuShow, setmenuShow] = useState(true);
   const [aboutShow, setAboutShow] = useState(false);
   const [taskCreateShow, setTaskCreateShow] = useState(false);
-  const { control, reset, watch } = useForm({
+  const { control, reset, watch, handleSubmit } = useForm({
     defaultValues: {
       taskType: "submit",
     },
   });
+
+  console.log("watch", watch());
 
   useEffect(() => {
     if (setSearch) {
@@ -147,6 +150,46 @@ const MenuToggle = ({ setSearch, search }) => {
       });
     }
   }, [watch("topic"), watch("purpose")]);
+
+  const onSubmit = async (data) => {
+    console.log("data", data);
+    // setLoading(true);
+    try {
+      // message.loading({ content: "Creating...", key: "createResult" });
+      const options = {
+        method: "POST",
+        // headers: {
+        //   authorization: `Bearer ${me.token}`,
+        // },
+        data: {
+          type: data.taskType,
+          email: data.email,
+          description: data.description,
+          url: data.url,
+        },
+        url: `${process.env.REACT_APP_API_ROOT_URL}/api/v1/tasks`,
+      };
+      const createResult = await axios(options);
+
+      console.log("createResult", createResult);
+      // if (createResult?.data?.status === "success") {
+      // setLoading(false);
+      // message.success({
+      //   content: "Created!",
+      //   key: "createResult",
+      // });
+      // setTimeout(() => {
+      //   history.push("/sites");
+      // }, 250);
+      // }
+    } catch (error) {
+      // setLoading(false);
+      // message.error({
+      //   content: `Erorr! ${error}`,
+      //   key: "createResult",
+      // });
+    }
+  };
 
   const purposeOptions = Object.keys(siteStats?.purposes?.[0] ?? {});
   const topicOptions = Object.keys(siteStats?.topics?.[0] ?? {});
@@ -183,7 +226,8 @@ const MenuToggle = ({ setSearch, search }) => {
           {!taskCreateShow && (
             <div
               id="selects"
-              className="w-2/3 sm:w-4/5 2xl:w-2/3 mt-4 flex flex-col md:flex-row items-center justify-between"
+              className="w-full mt-4 flex flex-col md:flex-row items-center justify-around"
+              // style={{ border: "1px solid red" }}
             >
               <Controller
                 name="purpose"
@@ -304,24 +348,54 @@ const MenuToggle = ({ setSearch, search }) => {
               {watch("taskType") == "submit" && (
                 <div className="mt-4" style={{ width: "100%" }}>
                   <div className="flex flex-col items-center justify-center">
-                    <input
-                      placeholder="Page url"
-                      className="mt-2 min-w-2/3"
-                      style={{
-                        border: "1px solid black",
-                        textAlign: "center",
-                      }}
+                    <Controller
+                      name="url"
+                      defaultValue=""
+                      control={control}
+                      render={({ field }) => (
+                        <input
+                          {...field}
+                          placeholder="Page url"
+                          className="mt-2 min-w-2/3"
+                          style={{
+                            border: "1px solid black",
+                            textAlign: "center",
+                          }}
+                        />
+                      )}
                     />
-                    <textarea
-                      placeholder="Description"
-                      className="mt-2 min-w-2/3"
-                      rows="3"
-                      style={{ border: "1px solid black", textAlign: "center" }}
+                    <Controller
+                      name="description"
+                      defaultValue=""
+                      control={control}
+                      render={({ field }) => (
+                        <textarea
+                          {...field}
+                          placeholder="Description"
+                          className="mt-2 min-w-2/3"
+                          rows="3"
+                          style={{
+                            border: "1px solid black",
+                            textAlign: "center",
+                          }}
+                        />
+                      )}
                     />
-                    <input
-                      placeholder="Your contact email"
-                      className="mt-2 min-w-2/3"
-                      style={{ border: "1px solid black", textAlign: "center" }}
+                    <Controller
+                      name="email"
+                      defaultValue=""
+                      control={control}
+                      render={({ field }) => (
+                        <input
+                          {...field}
+                          placeholder="Your contact email"
+                          className="mt-2 min-w-2/3"
+                          style={{
+                            border: "1px solid black",
+                            textAlign: "center",
+                          }}
+                        />
+                      )}
                     />
                     <div
                       id="agreement"
@@ -337,6 +411,7 @@ const MenuToggle = ({ setSearch, search }) => {
                   <button
                     className="py-2 px-4 m-4"
                     style={{ border: "1px solid black" }}
+                    onClick={handleSubmit(onSubmit)}
                   >
                     Confirm
                   </button>
