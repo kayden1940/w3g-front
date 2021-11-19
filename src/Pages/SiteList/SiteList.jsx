@@ -226,7 +226,7 @@ const MenuToggle = ({ setSearch, search }) => {
           {!taskCreateShow && (
             <div
               id="selects"
-              className="w-full mt-4 flex flex-col md:flex-row items-center justify-around"
+              className="w-full md:w-2/3 mt-4 flex flex-col md:flex-row items-center justify-around"
               // style={{ border: "1px solid red" }}
             >
               <Controller
@@ -239,7 +239,7 @@ const MenuToggle = ({ setSearch, search }) => {
                     className="px-4 py-2"
                     style={{ border: "1px solid black" }}
                   >
-                    <option value="hide">Any content</option>
+                    <option value="hide">Any sites</option>
                     {siteStats &&
                       purposeOptions.map((purpose) => (
                         <option key={purpose} value={purpose}>
@@ -316,7 +316,7 @@ const MenuToggle = ({ setSearch, search }) => {
                 {`It's`} a place for everyone to share their favorite websites.
               </p>
               <p className="m-2">
-                We {`don't`} accepts any promotional nor advertising offers.
+                We {`don't`} accept any promotional nor advertising offers.
               </p>
               <p className="m-2">Made by Kayden.</p>
             </div>
