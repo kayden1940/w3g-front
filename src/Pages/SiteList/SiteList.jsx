@@ -18,12 +18,10 @@ import { useForm, Controller } from "react-hook-form";
 import Menu from "../../Components/Menu";
 import axios from "axios";
 
-// import { debounce } from "../../utils";
-
-// gsap.registerPlugin(ScrollToPlugin);
-
 const SiteCard = ({ siteData }) => {
-  const { name, description, imageCover, purposes, topics, owner } = siteData;
+  const { name, description, imageCover, purposes, topics, owner, slug, url } =
+    siteData;
+  const [hover, setHover] = useState(false);
   return (
     <div
       className="w-full bg-white sahdow-lg overflow-hidden flex flex-col justify-center items-center "
@@ -32,18 +30,42 @@ const SiteCard = ({ siteData }) => {
         placeSelf: "start center",
       }}
     >
-      <div style={{}}>
+      <div>
         <img
+          role="presentation"
           className="object-center object-cover h-auto w-full"
           src={`${process.env.REACT_APP_API_ROOT_URL}/images/sites/${imageCover}`}
-          style={{ width: "400px", height: "300px", border: "1px solid black" }}
-          alt="photos"
+          style={{
+            width: "400px",
+            height: "300px",
+            border: "1px solid black",
+            opacity: hover ? "78%" : "100%",
+            transition: "0.2s",
+            cursor: "pointer",
+          }}
+          alt={slug}
+          onMouseOver={() => setHover(true)}
+          onFocus={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          onClick={() => (location.href = url)}
+          onKeyDown={() => (location.href = url)}
         />
       </div>
       <div className="text-center py-2 sm:py-2" style={{ minHeight: "160px" }}>
         <p
+          role="presentation"
           className="text-xl text-gray-700 font-bold mb-1 md:mb-1"
-          // style={{ border: "1px solid orange" }}
+          onMouseOver={() => setHover(true)}
+          onFocus={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          style={{
+            opacity: hover ? "70%" : "100%",
+            transition: "0.3s",
+            cursor: "pointer",
+            // border: "1px solid red",
+          }}
+          onClick={() => (location.href = url)}
+          onKeyDown={() => (location.href = url)}
         >
           {name.en}
         </p>
@@ -82,7 +104,7 @@ const SiteCard = ({ siteData }) => {
           </p>
         </div>
         <p
-          className="text-sm text-gray-800 font-light"
+          className="text-sm text-black-100"
           // style={{ border: "1px solid orange" }}
         >
           {description}
@@ -95,7 +117,11 @@ const SiteCard = ({ siteData }) => {
 const SiteList = () => {
   const [search, setSearch] = useState({ purpose: "hide", topic: "hide" });
 
-  const { data, error, mutate } = useSWR(
+  const {
+    data = [],
+    error,
+    mutate,
+  } = useSWR(
     `${process.env.REACT_APP_API_ROOT_URL}/api/v1/sites?${
       search?.purpose ? `purposes=${search.purpose}&` : ""
     }${search?.topic ? `topics=${search.topic}` : ""}`,
@@ -112,6 +138,7 @@ const SiteList = () => {
       return a.name.en.localeCompare(b.name.en);
     });
   };
+  const menuRef = useRef();
 
   return (
     <section
@@ -123,15 +150,32 @@ const SiteList = () => {
         }
       }
     >
-      <Menu setSearch={setSearch} search={search} />
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-6"
-        style={{}}
-      >
-        {getSortedSites(data ?? []).map((siteData, index) => (
-          <SiteCard key={index} siteData={siteData} />
-        ))}
-      </div>
+      <Menu ref={menuRef} setSearch={setSearch} search={search} />
+
+      {data.length == 0 && (
+        <div
+          className="h-screen w-screen flex justify-center items-center"
+          // style={{ border: "1px solid red" }}
+        >
+          <span className="flex">
+            <p>No simular site,&nbsp;</p>
+            <button
+              className="underline"
+              style={{ cursor: "pointer" }}
+              onClick={() => menuRef.current.clickNoSiteSubmit()}
+            >
+              submit one?
+            </button>
+          </span>
+        </div>
+      )}
+      {data.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-6">
+          {getSortedSites(data).map((siteData, index) => (
+            <SiteCard key={index} siteData={siteData} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
   useEffect,
+  useImperativeHandle,
   useCallback,
   useMemo,
 } from "react";
@@ -326,7 +327,7 @@ const useQuery = () => {
   return useMemo(() => new URLSearchParams(search), [search]);
 };
 
-const MenuToggle = ({ setSearch, search }) => {
+const MenuToggle = forwardRef(({ setSearch, search }, ref) => {
   const {
     data: siteStats,
     error,
@@ -341,7 +342,7 @@ const MenuToggle = ({ setSearch, search }) => {
   const [aboutShow, setAboutShow] = useState(false);
   const [taskCreateShow, setTaskCreateShow] = useState(false);
   const query = useQuery();
-  const { control, reset, watch, handleSubmit } = useForm({
+  const { control, reset, watch, handleSubmit, setValue } = useForm({
     defaultValues: {
       taskType: "submit",
       purpose: query.get("purpose"),
@@ -349,16 +350,36 @@ const MenuToggle = ({ setSearch, search }) => {
     },
   });
 
+  useImperativeHandle(ref, () => ({
+    clickNoSiteSubmit() {
+      setmenuShow(true);
+      setAboutShow(false);
+      setTaskCreateShow(true);
+      setValue("taskType", "submit");
+    },
+  }));
+
   useEffect(() => {
-    if (
-      setSearch &&
-      (watch("purpose") !== "hide" || watch("purpose") !== "hide")
-    ) {
+    if (setSearch) {
       setSearch({
         purpose: watch("purpose"),
         topic: watch("topic"),
       });
     }
+    let queries = "";
+    if (watch("purpose") && !watch("topic")) {
+      queries = `/?purpose=${watch("purpose")}`;
+    }
+    if (!watch("purpose") && watch("topic")) {
+      queries = `/?topic=${watch("topic")}`;
+    }
+    if (!watch("purpose") && !watch("topic")) {
+      queries = `/`;
+    }
+    if (watch("purpose") && watch("topic")) {
+      queries = `/?purpose=${watch("purpose")}&topic=${watch("topic")}`;
+    }
+    history.replaceState(null, "", queries);
   }, [watch("topic"), watch("purpose")]);
 
   const purposeOptions = Object.keys(siteStats?.purposes?.[0] ?? {});
@@ -366,7 +387,7 @@ const MenuToggle = ({ setSearch, search }) => {
 
   return (
     <>
-      <div className="fixed" style={{ top: "5vh", right: "0px" }}>
+      <div className="fixed" style={{ top: "5vh", right: "0px" }} ref={ref}>
         <button
           className="rounded-l-lg p-2"
           style={{
@@ -387,6 +408,7 @@ const MenuToggle = ({ setSearch, search }) => {
           top: "2.5vh",
           display: menuShow ? "block" : "none",
           border: "1px solid black",
+          zIndex: 1,
         }}
       >
         <div
@@ -396,20 +418,20 @@ const MenuToggle = ({ setSearch, search }) => {
           {!taskCreateShow && (
             <div
               id="selects"
-              className="w-full md:w-2/3 mt-4 flex flex-col lg:flex-row items-center justify-around"
-              //   style={{ border: "1px solid red" }}
+              className="w-full md:w-2/3 mt-4 flex flex-col md:flex-row items-center justify-around"
+              // style={{ border: "1px solid red" }}
             >
               <Controller
                 name="purpose"
                 control={control}
-                defaultValue="hide"
+                defaultValue=""
                 render={({ field }) => (
                   <select
                     {...field}
                     className="px-4 py-2 min-w-3/7"
                     style={{ border: "1px solid black", textAlign: "center" }}
                   >
-                    <option value="hide">Any sites</option>
+                    <option value="">Any sites</option>
                     {siteStats &&
                       purposeOptions.map((purpose) => (
                         <option key={purpose} value={purpose}>
@@ -424,7 +446,7 @@ const MenuToggle = ({ setSearch, search }) => {
               </div>
               <Controller
                 name="topic"
-                defaultValue="hide"
+                defaultValue=""
                 control={control}
                 render={({ field }) => (
                   <select
@@ -432,7 +454,7 @@ const MenuToggle = ({ setSearch, search }) => {
                     className="px-4 py-2 min-w-3/7"
                     style={{ border: "1px solid black", textAlign: "center" }}
                   >
-                    <option value="hide">any topics</option>
+                    <option value="">any topics</option>
                     {siteStats &&
                       topicOptions.map((purpose) => (
                         <option key={purpose} value={purpose}>
@@ -485,5 +507,5 @@ const MenuToggle = ({ setSearch, search }) => {
       </div>
     </>
   );
-};
+});
 export default MenuToggle;
