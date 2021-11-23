@@ -117,11 +117,7 @@ const SiteCard = ({ siteData }) => {
 const SiteList = () => {
   const [search, setSearch] = useState({ purpose: "hide", topic: "hide" });
 
-  const {
-    data = [],
-    error,
-    mutate,
-  } = useSWR(
+  const { data, error, mutate, isValidating } = useSWR(
     `${process.env.REACT_APP_API_ROOT_URL}/api/v1/sites?${
       search?.purpose ? `purposes=${search.purpose}&` : ""
     }${search?.topic ? `topics=${search.topic}` : ""}`,
@@ -152,28 +148,28 @@ const SiteList = () => {
     >
       <Menu ref={menuRef} setSearch={setSearch} search={search} />
 
-      {data.length == 0 && (
-        <div
-          className="h-screen w-screen flex justify-center items-center"
-          // style={{ border: "1px solid red" }}
-        >
-          <span className="flex">
-            <p>No simular site,&nbsp;</p>
-            <button
-              className="underline"
-              style={{ cursor: "pointer" }}
-              onClick={() => menuRef.current.clickNoSiteSubmit()}
-            >
-              submit one?
-            </button>
-          </span>
-        </div>
-      )}
-      {data.length > 0 && (
+      {(data ?? []).length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-6">
           {getSortedSites(data).map((siteData, index) => (
             <SiteCard key={index} siteData={siteData} />
           ))}
+        </div>
+      ) : (
+        <div className="h-screen w-screen flex justify-center items-center">
+          {isValidating ? (
+            <p>Loading</p>
+          ) : (
+            <span className="flex">
+              <p>No simular site,&nbsp;</p>
+              <button
+                className="underline"
+                style={{ cursor: "pointer" }}
+                onClick={() => menuRef.current.clickNoSiteSubmit()}
+              >
+                submit one?
+              </button>
+            </span>
+          )}
         </div>
       )}
     </section>

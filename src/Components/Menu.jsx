@@ -387,7 +387,11 @@ const MenuToggle = forwardRef(({ setSearch, search }, ref) => {
 
   return (
     <>
-      <div className="fixed" style={{ top: "5vh", right: "0px" }} ref={ref}>
+      <div
+        className="fixed"
+        style={{ top: "5vh", right: "0px", zIndex: 2 }}
+        ref={ref}
+      >
         <button
           className="rounded-l-lg p-2"
           style={{
