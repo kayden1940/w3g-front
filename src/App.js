@@ -1,19 +1,17 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Link,
-  Redirect,
-  Route,
-  Router,
-  Routes,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import SiteList from "./Pages/SiteList/SiteList";
-import TaskCreate from "./Pages/TaskCreate/TaskCreate";
+import ReactGA from "react-ga4";
 
 const App = () => {
+  ReactGA.initialize([
+    {
+      trackingId: "G-MCFB4HGKGF",
+    },
+  ]);
+  ReactGA.send({ hitType: "pageview", page: "/" });
+
   return (
     <div className="App">
       <meta

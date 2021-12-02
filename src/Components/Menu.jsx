@@ -1,28 +1,21 @@
 // import styled, { css } from "styled-components";
 import React, {
   forwardRef,
-  useRef,
   useState,
   useEffect,
   useImperativeHandle,
-  useCallback,
   useMemo,
 } from "react";
 import { useLocation } from "react-router-dom";
 import useSWR from "swr";
-// import { motion, useTransform, useElementScroll } from "framer-motion";
-// import { useWindowSize } from "../../hooks/useWindowSize";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-// import { useDrag } from "@use-gesture/react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { validateEmail, validateUrl } from "../utils";
+import ReactGA from "react-ga4";
 
 const About = () => {
   return (
-    <div id="about" className="flex flex-col items-center my-2">
+    <div id="about" className="flex flex-col items-center my-2 text-center">
       <p className="m-2">The g of w3g is stands for gallery,</p>
       <p className="m-2">
         {`It's`} a place for everyone to share their favorite websites.
@@ -234,12 +227,12 @@ const TaskForm = () => {
                 <>
                   <div
                     id="agreement"
-                    className="flex flex-row items-center justify-center mt-2"
+                    className="flex flex-row items-center justify-center mt-2 text-center"
                   >
                     <input type="checkbox" {...field} />
                     <p className="ml-2">this site is free from:</p>
                   </div>
-                  <p>
+                  <p className="text-center">
                     hate speech, misinformation, illegal and harmful content.
                   </p>
                 </>
@@ -323,7 +316,6 @@ const MenuToggleIcon = ({ menuShow }) => {
 };
 const useQuery = () => {
   const { search } = useLocation();
-
   return useMemo(() => new URLSearchParams(search), [search]);
 };
 
@@ -369,14 +361,18 @@ const MenuToggle = forwardRef(({ setSearch, search }, ref) => {
     let queries = "";
     if (watch("purpose") && !watch("topic")) {
       queries = `/?purpose=${watch("purpose")}`;
+      ReactGA.event("choosed_purpose", { purpose: watch("purpose") });
     }
     if (!watch("purpose") && watch("topic")) {
       queries = `/?topic=${watch("topic")}`;
+      ReactGA.event("choosed_topic", { topic: watch("topic") });
     }
     if (!watch("purpose") && !watch("topic")) {
       queries = `/`;
     }
     if (watch("purpose") && watch("topic")) {
+      ReactGA.event("choosed_purpose", { purpose: watch("purpose") });
+      ReactGA.event("choosed_topic", { topic: watch("topic") });
       queries = `/?purpose=${watch("purpose")}&topic=${watch("topic")}`;
     }
     history.replaceState(null, "", queries);

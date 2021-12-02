@@ -1,22 +1,15 @@
-/* eslint-disable react/display-name */
-import styled, { css } from "styled-components";
-import React, {
-  forwardRef,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useRef, useState } from "react";
 import useSWR from "swr";
-import { motion, useTransform, useElementScroll } from "framer-motion";
-// import { useWindowSize } from "../../hooks/useWindowSize";
-import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { useDrag } from "@use-gesture/react";
-import { useForm, Controller } from "react-hook-form";
 import Menu from "../../Components/Menu";
-import axios from "axios";
+// import styled, { css } from "styled-components";
+// import { motion, useTransform, useElementScroll } from "framer-motion";
+// // import { useWindowSize } from "../../hooks/useWindowSize";
+// import gsap from "gsap";
+// // import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+// import { useDrag } from "@use-gesture/react";
+// import { useForm, Controller } from "react-hook-form";
+// import axios from "axios";
 
 const SiteCard = ({ siteData }) => {
   const { name, description, imageCover, purposes, topics, owner, slug, url } =
@@ -115,7 +108,7 @@ const SiteCard = ({ siteData }) => {
 };
 
 const SiteList = () => {
-  const [search, setSearch] = useState({ purpose: "hide", topic: "hide" });
+  const [search, setSearch] = useState({ purpose: "", topic: "" });
 
   const { data, error, mutate, isValidating } = useSWR(
     `${process.env.REACT_APP_API_ROOT_URL}/api/v1/sites?${
