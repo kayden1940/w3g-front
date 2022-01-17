@@ -16,10 +16,7 @@ import ReactGA from "react-ga4";
 const About = () => {
   return (
     <div id="about" className="flex flex-col items-center my-2 text-center">
-      <p className="m-2">The g of w3g is stands for gallery,</p>
-      <p className="m-2">
-        {`It's`} a place for everyone to share their favorite websites.
-      </p>
+      <p className="m-2">w3g.link is a public driven website bookmarks.</p>
       <p className="m-2">
         We {`don't`} accept any promotional nor advertising offers.
       </p>
@@ -331,7 +328,7 @@ const MenuToggle = forwardRef(({ setSearch, search }, ref) => {
   );
 
   const [menuShow, setmenuShow] = useState(true);
-  const [aboutShow, setAboutShow] = useState(false);
+  const [aboutShow, setAboutShow] = useState(true);
   const [taskCreateShow, setTaskCreateShow] = useState(false);
   const query = useQuery();
   const { control, reset, watch, handleSubmit, setValue } = useForm({
